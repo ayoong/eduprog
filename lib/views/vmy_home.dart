@@ -1,11 +1,14 @@
 import 'package:eduprog/controllers/val.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+enum pilihan { all, day, night }
+
 class VMyHome extends StatelessWidget {
-  const VMyHome({Key? key}) : super(key: key);
+  VMyHome({Key? key}) : super(key: key);
 
-
+  final dipilih = pilihan.all.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +24,10 @@ class VMyHome extends StatelessWidget {
                 Expanded(
                   child: Text(
                     'Data Timbangan PerHari',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.grey[700]),
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey[700]),
                   ),
                 ),
                 IconButton(
@@ -40,45 +46,66 @@ class VMyHome extends StatelessWidget {
                 children: [
                   Icon(Icons.search, color: Colors.white),
                   TextButton(
-                    onPressed: (){
-
-                    }, 
-                    child: Text('2021-11-24', style: TextStyle(color: Colors.white))
-                  ),
+                      onPressed: () {},
+                      child: Text('2021-11-24',
+                          style: TextStyle(color: Colors.white))),
                   TextButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.white)
-                    ),
-                    onPressed: (){
-
-                    }, 
-                    child: Text("Cari",)
-                  )
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.white)),
+                      onPressed: () {},
+                      child: Text(
+                        "Cari",
+                      ))
                 ],
               ),
             ),
-            //  Container(
-            // padding: EdgeInsets.all(8),
-              
+            Obx(() => Container(
+                  padding: EdgeInsets.all(8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Radio(
+                          value: dipilih.value,
+                          groupValue: pilihan.all,
+                          onChanged: (hasil){
+                            dipilih.value = pilihan.all;
+                          }
+                      ),
+                      Text("All"),
+                      Radio(
+                          value: dipilih.value,
+                          groupValue: pilihan.day,
+                          onChanged: (hasil){
+                            dipilih.value = pilihan.day;
+                          }
+                      ),
+                      Text("Day"),
+                      Radio(
+                          value: dipilih.value,
+                          groupValue: pilihan.night,
+                          onChanged: (hasil){
+                            dipilih.value = pilihan.night;
+                          }
+                      ),
+                      Text("Night"),
+                    ],
+                  ),
+                )),
+            // Container(
+            //   padding: EdgeInsets.all(8),
             //   child: Row(
             //     mainAxisAlignment: MainAxisAlignment.center,
             //     children: [
-            //       Row(children: [
-            //         Radio(
-            //           groupValue: 1,
-            //           value: 1,
-            //           onChanged: (value){},
-            //           ),
-            //           SizedBox(width: 10.0,),
-                      
-            //           Text("ALL"),
-            //       ],),
-            Flexible(child: ListView(
-
-              children:[
-
-              ]
-            ))
+            //       Radio(
+            //         value: value,
+            //         groupValue: groupValue,
+            //         onChanged: onChanged
+            //       )
+            //     ],
+            //   ),
+            // ),
+            Flexible(child: ListView(children: []))
           ],
         )));
   }
