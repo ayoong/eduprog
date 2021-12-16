@@ -1,5 +1,6 @@
 import 'package:eduprog/views/vsplash.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 
@@ -21,11 +22,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const GetMaterialApp(
+    return GetMaterialApp(
       defaultTransition: Transition.zoom,
       debugShowCheckedModeBanner: false,
       // setelah aplikasi run akan langsung memunculkan halaman splash screen
-      home: VSplash(),
+      home: const VSplash(),
+      builder: EasyLoading.init(),
     );
   }
 }

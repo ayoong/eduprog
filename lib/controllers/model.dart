@@ -9,12 +9,12 @@ class MUser {
   String? userSession;
 
   MUser(
-      {this.id,
-      this.userName,
-      this.userPassword,
-      this.userFullName,
-      this.lastRequest,
-      this.userSession});
+      {id,
+      userName,
+      userPassword,
+      userFullName,
+      lastRequest,
+      userSession});
 
   MUser.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -27,12 +27,39 @@ class MUser {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['user_name'] = this.userName;
-    data['user_password'] = this.userPassword;
-    data['user_full_name'] = this.userFullName;
-    data['last_request'] = this.lastRequest;
-    data['user_session'] = this.userSession;
+    data['id'] = id;
+    data['user_name'] = userName;
+    data['user_password'] = userPassword;
+    data['user_full_name'] = userFullName;
+    data['last_request'] = lastRequest;
+    data['user_session'] = userSession;
     return data;
   }
 }
+
+
+class MTransaksi {
+  String? dt;
+  String? supplier;
+  String? jamIn;
+  int? nettoRekon;
+
+  MTransaksi({dt, supplier, jamIn, nettoRekon});
+
+  MTransaksi.fromJson(Map<String, dynamic> json) {
+    dt = json['dt'];
+    supplier = json['supplier'];
+    jamIn = json['jam_in'];
+    nettoRekon = json['netto_rekon'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['dt'] = dt;
+    data['supplier'] = supplier;
+    data['jam_in'] = jamIn;
+    data['netto_rekon'] = nettoRekon;
+    return data;
+  }
+}
+

@@ -37,6 +37,7 @@ dependencies:
   get: ^4.5.1
   get_storage: ^2.0.3
   flutter_easyloading: ^3.0.3
+  json_table: ^2.0.1
 
 dev_dependencies:
   flutter_test:
