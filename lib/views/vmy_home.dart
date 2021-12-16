@@ -60,6 +60,7 @@ class VMyHome extends StatelessWidget {
                 ],
               ),
             ),
+            // ini yang baru ris
             Obx(() => Container(
                   padding: EdgeInsets.all(8),
                   child: Row(
