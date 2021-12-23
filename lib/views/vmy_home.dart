@@ -146,8 +146,6 @@ class VMyHome extends StatelessWidget {
                         child: JsonTable(
                               listTransaksiJson,
                               allowRowHighlight: true,
-                              // showColumnToggle: true,
-                              // paginationRowCount: 11,
                               rowHighlightColor: Colors.grey[200],
                               columns: [
                                 JsonTableColumn(
