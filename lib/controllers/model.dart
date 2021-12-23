@@ -43,23 +43,28 @@ class MTransaksi {
   String? supplier;
   String? jamIn;
   int? nettoRekon;
+  String? tanggalShift;
 
-  MTransaksi({dt, supplier, jamIn, nettoRekon});
+  MTransaksi(
+      {this.dt, this.supplier, this.jamIn, this.nettoRekon, this.tanggalShift});
 
   MTransaksi.fromJson(Map<String, dynamic> json) {
     dt = json['dt'];
     supplier = json['supplier'];
     jamIn = json['jam_in'];
     nettoRekon = json['netto_rekon'];
+    tanggalShift = json['tanggal_shift'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['dt'] = dt;
-    data['supplier'] = supplier;
-    data['jam_in'] = jamIn;
-    data['netto_rekon'] = nettoRekon;
+    data['dt'] = this.dt;
+    data['supplier'] = this.supplier;
+    data['jam_in'] = this.jamIn;
+    data['netto_rekon'] = this.nettoRekon;
+    data['tanggal_shift'] = this.tanggalShift;
     return data;
   }
 }
+
 

@@ -14,5 +14,5 @@ class Conn extends GetConnect{
   // dynamic adalah variable multy dan bebas , bisa berubah menjadi apapun contoh menjadi string , int, ataupun map
    Future<Response> login(Map<String, dynamic> body) => post(_url+'/login', body);
 
-   Future<Response> transaksi() => get(_url+"/transaksi");
+   Future<Response> transaksi(String tanggal) => get(_url+"/transaksi/$tanggal");
 }
