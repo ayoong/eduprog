@@ -1,6 +1,7 @@
 import 'package:eduprog/controllers/conn.dart';
 import 'package:eduprog/controllers/model.dart';
 import 'package:eduprog/controllers/val.dart';
+import 'package:eduprog/views/vbar_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -16,11 +17,23 @@ class VMyHome extends StatelessWidget {
   final tanggalnya = DateTime.now().toString().split(" ")[0].obs;
   final listTransaksi = <MTransaksi>[].obs;
   final listTransaksiJson = [].obs;
+  final ritAndTonase = {}.obs;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.cyan, title: Text("PT ARUTMIN")),
+      bottomNavigationBar: BottomNavigationBar(items: [
+        BottomNavigationBarItem(label: 'day', icon: Icon(Icons.view_day, )),
+        BottomNavigationBarItem(label: "month", icon: Icon(Icons.monitor_weight_outlined))
+      ]),
+      appBar: AppBar(
+        backgroundColor: Colors.cyan,
+        title: Text("PT ARUTMIN"),
+        actions: [
+          IconButton(
+              onPressed: () => Get.to(VBarChart()), icon: Icon(Icons.bar_chart))
+        ],
+      ),
       body: SafeArea(
         child: Column(
           children: [
@@ -131,6 +144,44 @@ class VMyHome extends StatelessWidget {
                 ),
               ),
             ),
+            Obx(() => Container(
+                  color: Colors.cyan,
+                  padding: EdgeInsets.all(8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        children: [
+                          Text(
+                            "ROT",
+                            style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          Text(ritAndTonase['rit'].toString(),
+                            style: TextStyle(
+                              color: Colors.white
+                            ),
+                          )
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            "TONASE",
+                            style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+                          ),
+                          Text(ritAndTonase['tonase'].toString(),
+                            style: TextStyle(
+                              color: Colors.white
+                            ),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                ),),
+                SizedBox(
+                  height: 30,
+                ),
             Container(
               padding: EdgeInsets.all(8),
               color: Colors.cyan,
@@ -173,53 +224,57 @@ class VMyHome extends StatelessWidget {
             ),
             Flexible(
               child: Obx(
-                () => ListView(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(8),
-                      child: Column(
+                () => listTransaksi.isEmpty
+                    ? Center(
+                        child: Text("Data Kosong"),
+                      )
+                    : ListView(
                         children: [
-                          for (final trx in listTransaksi)
-                            Visibility(
-                              visible: dipilih.value.index == 2 &&
-                                      trx.tanggalShift == "MALAM" ||
-                                  dipilih.value.index == 1 &&
-                                      trx.tanggalShift == "SIANG" ||
-                                  dipilih.value.index == 0,
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      trx.dt.toString(),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      trx.supplier.toString(),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      trx.jamIn
-                                          .toString()
-                                          .split("T")[1]
-                                          .toString()
-                                          .split(".")[0],
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      trx.nettoRekon.toString(),
+                          Container(
+                            padding: EdgeInsets.all(8),
+                            child: Column(
+                              children: [
+                                for (final trx in listTransaksi)
+                                  Visibility(
+                                    visible: dipilih.value.index == 2 &&
+                                            trx.tanggalShift == "MALAM" ||
+                                        dipilih.value.index == 1 &&
+                                            trx.tanggalShift == "SIANG" ||
+                                        dipilih.value.index == 0,
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: Text(
+                                            trx.dt.toString(),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            trx.supplier.toString(),
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            trx.jamIn
+                                                .toString()
+                                                .split("T")[1]
+                                                .toString()
+                                                .split(".")[0],
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            trx.nettoRekon.toString(),
+                                          ),
+                                        )
+                                      ],
                                     ),
                                   )
-                                ],
-                              ),
-                            )
+                              ],
+                            ),
+                          )
                         ],
                       ),
-                    )
-                  ],
-                ),
               ),
             )
           ],
@@ -242,5 +297,7 @@ class VMyHome extends StatelessWidget {
 
   ketikaDibuka() async {
     await loadTransaksi();
+    final rt = await Conn().ritAndTonase();
+    ritAndTonase.assignAll(rt.body);
   }
 }
