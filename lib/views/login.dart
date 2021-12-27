@@ -1,7 +1,7 @@
 import 'package:eduprog/controllers/conn.dart';
 import 'package:eduprog/controllers/model.dart';
 import 'package:eduprog/controllers/val.dart';
-import 'package:eduprog/views/vmy_home.dart';
+import 'package:eduprog/views/vtanggal.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -132,7 +132,7 @@ class VLogin extends StatelessWidget {
     // setelah data diskimpan . makan akan ber
     //
     //pindah halaman ke vmyhome()
-    Get.off(VMyHome());
+    Get.off(VTanggal());
     
 
   }

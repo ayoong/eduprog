@@ -1,6 +1,7 @@
 import 'package:eduprog/controllers/val.dart';
 import 'package:eduprog/views/login.dart';
 import 'package:eduprog/views/vmy_home.dart';
+import 'package:eduprog/views/vtanggal.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

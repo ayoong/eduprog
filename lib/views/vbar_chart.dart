@@ -107,25 +107,25 @@ class VBarChart extends StatelessWidget {
   }
 
   /// Create one series with sample hard coded data.
-  static List<Series<OrdinalSales, String>> _createSampleData() {
-    final data = [
-      OrdinalSales('2014', 5),
-      OrdinalSales('2015', 25),
-      OrdinalSales('2016', 100),
-      OrdinalSales('2017', 75),
-    ];
+  // static List<Series<OrdinalSales, String>> _createSampleData() {
+  //   final data = [
+  //     OrdinalSales('2014', 5),
+  //     OrdinalSales('2015', 25),
+  //     OrdinalSales('2016', 100),
+  //     OrdinalSales('2017', 75),
+  //   ];
 
-    return [
-      Series<OrdinalSales, String>(
-          id: 'Sales',
-          domainFn: (OrdinalSales sales, _) => sales.jam,
-          measureFn: (OrdinalSales sales, _) => sales.net,
-          data: data,
-          // Set a label accessor to control the text of the bar label.
-          labelAccessorFn: (OrdinalSales sales, _) =>
-              '\$${sales.net.toString()}')
-    ];
-  }
+  //   return [
+  //     Series<OrdinalSales, String>(
+  //         id: 'Sales',
+  //         domainFn: (OrdinalSales sales, _) => sales.jam,
+  //         measureFn: (OrdinalSales sales, _) => sales.net,
+  //         data: data,
+  //         // Set a label accessor to control the text of the bar label.
+  //         labelAccessorFn: (OrdinalSales sales, _) =>
+  //             '\$${sales.net.toString()}')
+  //   ];
+  // }
 
   Future onLoad()async{
     final res = await Conn().chart();
