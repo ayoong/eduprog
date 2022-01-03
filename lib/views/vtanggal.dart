@@ -1,9 +1,11 @@
 import 'package:eduprog/controllers/conn.dart';
 import 'package:eduprog/controllers/model.dart';
+import 'package:eduprog/controllers/val.dart';
 import 'package:eduprog/views/vbar_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 enum pilihanSiangAtauMalam { all, day, night }
 
@@ -78,8 +80,10 @@ class VTanggal extends StatelessWidget {
 
                   if (tanggal != null) {
                     tanggalnya.value = tanggal.toString().split(" ")[0];
-                    print(tanggalnya.toString());
+                    Val.perTanggal().set(tanggalnya.value);
                     await loadTransaksi();
+                    await loadRitAndTodnase();
+                    
                   }
                 },
                 child: const Text(
@@ -135,14 +139,14 @@ class VTanggal extends StatelessWidget {
                 Column(
                   children: [
                     const Text(
-                      "ROT",
+                      "RIT",
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,
                           fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      ritAndTonase['rit'].toString(),
+                      ritAndTonase['rit'] == null? "0,0": NumberFormat.simpleCurrency(locale: "id-ID").format(ritAndTonase['rit']).replaceAll("Rp", "").replaceAll(",00", ",0"),
                       style: const TextStyle(color: Colors.white),
                     )
                   ],
@@ -157,7 +161,7 @@ class VTanggal extends StatelessWidget {
                           fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      ritAndTonase['tonase'].toString(),
+                      ritAndTonase['tonase'] == null? "0,0": NumberFormat.simpleCurrency(locale: "id-Id").format(ritAndTonase['tonase']).replaceAll("Rp", "").replaceAll(",00", ",0"),
                       style: const TextStyle(color: Colors.white),
                     )
                   ],
@@ -248,7 +252,7 @@ class VTanggal extends StatelessWidget {
                               ),
                               Expanded(
                                 child: Text(
-                                  trx.nettoRekon.toString(),
+                                  NumberFormat.simpleCurrency(locale: "id-ID").format(trx.nettoRekon).replaceAll("Rp", "").replaceAll(",00", ",0"),
                                 ),
                               )
                             ],
@@ -264,6 +268,7 @@ class VTanggal extends StatelessWidget {
 
   loadTransaksi() async {
     EasyLoading.showInfo("loading");
+    if(Val.perTanggal().hasData()) tanggalnya.value = Val.perTanggal().get();
     final transaksi = await Conn().transaksi(tanggalnya.value);
     listTransaksiJson.assignAll(transaksi.body);
 
@@ -276,7 +281,11 @@ class VTanggal extends StatelessWidget {
 
   ketikaDibuka() async {
     await loadTransaksi();
-    final rt = await Conn().ritAndTonase();
+    loadRitAndTodnase();
+  }
+
+  loadRitAndTodnase()async{
+    final rt = await Conn().ritAndTonase(tanggalnya.value);
     ritAndTonase.assignAll(rt.body);
   }
 }

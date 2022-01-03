@@ -46,7 +46,7 @@ class MTransaksi {
   String? tanggalShift;
 
   MTransaksi(
-      {this.dt, this.supplier, this.jamIn, this.nettoRekon, this.tanggalShift});
+      {dt, supplier, jamIn, nettoRekon, tanggalShift});
 
   MTransaksi.fromJson(Map<String, dynamic> json) {
     dt = json['dt'];
@@ -58,13 +58,36 @@ class MTransaksi {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['dt'] = this.dt;
-    data['supplier'] = this.supplier;
-    data['jam_in'] = this.jamIn;
-    data['netto_rekon'] = this.nettoRekon;
-    data['tanggal_shift'] = this.tanggalShift;
+    data['dt'] = dt;
+    data['supplier'] = supplier;
+    data['jam_in'] = jamIn;
+    data['netto_rekon'] = nettoRekon;
+    data['tanggal_shift'] = tanggalShift;
     return data;
   }
 }
+
+class MTablePerBulan {
+  String? tanggal;
+  int? rit;
+  int? tonase;
+
+  MTablePerBulan({tanggal, rit, tonase});
+
+  MTablePerBulan.fromJson(Map<String, dynamic> json) {
+    tanggal = json['tanggal'];
+    rit = json['rit'];
+    tonase = json['tonase'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['tanggal'] = tanggal;
+    data['rit'] = rit;
+    data['tonase'] = tonase;
+    return data;
+  }
+}
+
 
 

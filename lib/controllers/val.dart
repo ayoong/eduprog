@@ -10,6 +10,8 @@ class Val{
   final String _key;
 
   Val.user(): _key = "user";
+  Val.perTanggal(): _key = "pertanggal";
+  Val.perBulan(): _key = "perbulan";
 
   // untuk mendapatkan data
   get() => GetStorage().read(_key);

@@ -138,7 +138,7 @@ class VBarChart extends StatelessWidget {
           data: data,
           // Set a label accessor to control the text of the bar label.
           labelAccessorFn: (OrdinalSales sales, _) =>
-              '\Rp${sales.net.toString()}')
+              '${sales.net.toString()}')
     ];
     
     print(res.body);
