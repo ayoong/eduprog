@@ -1,3 +1,4 @@
+import 'package:double_back_to_close/double_back_to_close.dart';
 import 'package:eduprog/views/vsplash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -26,7 +27,10 @@ class MyApp extends StatelessWidget {
       defaultTransition: Transition.zoom,
       debugShowCheckedModeBanner: false,
       // setelah aplikasi run akan langsung memunculkan halaman splash screen
-      home: const VSplash(),
+      home: const DoubleBack(
+        message: "yakin mau keluar ? kalo iya tekan back lagi",
+        child: const VSplash()
+      ),
       builder: EasyLoading.init(),
     );
   }

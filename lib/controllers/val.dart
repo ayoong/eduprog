@@ -1,5 +1,5 @@
 import 'package:get_storage/get_storage.dart';
-
+import 'package:get/get.dart';
 
 
 /// class untuk menyimpan data semenatara
@@ -23,4 +23,8 @@ class Val{
   hasData() => GetStorage().hasData(_key);
 
 
+}
+
+class Glb{
+  static final tanggalnya = DateTime.now().toString().split(" ")[0].obs;
 }

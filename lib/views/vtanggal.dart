@@ -2,6 +2,7 @@ import 'package:eduprog/controllers/conn.dart';
 import 'package:eduprog/controllers/model.dart';
 import 'package:eduprog/controllers/val.dart';
 import 'package:eduprog/views/vbar_chart.dart';
+import 'package:eduprog/views/vmy_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
@@ -13,7 +14,7 @@ class VTanggal extends StatelessWidget {
   VTanggal({Key? key}) : super(key: key);
 
   final dipilih = pilihanSiangAtauMalam.all.obs;
-  final tanggalnya = DateTime.now().toString().split(" ")[0].obs;
+  // final tanggalnya = DateTime.now().toString().split(" ")[0].obs;
   final listTransaksi = <MTransaksi>[].obs;
   final listTransaksiJson = [].obs;
   final ritAndTonase = {}.obs;
@@ -44,7 +45,7 @@ class VTanggal extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () async {
-                  print("saya di refresh");
+                  await VMyHome().onLoad();
                 },
                 icon: const Icon(Icons.refresh, color: Colors.cyan),
               )
@@ -62,7 +63,7 @@ class VTanggal extends StatelessWidget {
                 () => Container(
                   padding: const EdgeInsets.all(8),
                   child: Text(
-                    tanggalnya.value,
+                    Glb.tanggalnya.value,
                     style: const TextStyle(color: Colors.white),
                   ),
                 ),
@@ -73,14 +74,14 @@ class VTanggal extends StatelessWidget {
                 onPressed: () async {
                   final tanggal = await showDatePicker(
                     context: context,
-                    initialDate: DateTime.parse(tanggalnya.value.toString()),
+                    initialDate: DateTime.parse(Glb.tanggalnya.value.toString()),
                     firstDate: DateTime.parse("2020-01-01"),
                     lastDate: DateTime.now(),
                   );
 
                   if (tanggal != null) {
-                    tanggalnya.value = tanggal.toString().split(" ")[0];
-                    Val.perTanggal().set(tanggalnya.value);
+                    Glb.tanggalnya.value = tanggal.toString().split(" ")[0];
+                    Val.perTanggal().set(Glb.tanggalnya.value);
                     await loadTransaksi();
                     await loadRitAndTodnase();
                     
@@ -229,33 +230,36 @@ class VTanggal extends StatelessWidget {
                               dipilih.value.index == 1 &&
                                   trx.tanggalShift == "SIANG" ||
                               dipilih.value.index == 0,
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  trx.dt.toString(),
+                          child: Container(
+                            padding: EdgeInsets.all(16),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    trx.dt.toString(),
+                                  ),
                                 ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  trx.supplier.toString(),
+                                Expanded(
+                                  child: Text(
+                                    trx.supplier.toString(),
+                                  ),
                                 ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  trx.jamIn
-                                      .toString()
-                                      .split("T")[1]
-                                      .toString()
-                                      .split(".")[0],
+                                Expanded(
+                                  child: Text(
+                                    trx.jamIn
+                                        .toString()
+                                        .split("T")[1]
+                                        .toString()
+                                        .split(".")[0],
+                                  ),
                                 ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  NumberFormat.simpleCurrency(locale: "id-ID").format(trx.nettoRekon).replaceAll("Rp", "").replaceAll(",00", ",0"),
-                                ),
-                              )
-                            ],
+                                Expanded(
+                                  child: Text(
+                                    NumberFormat.simpleCurrency(locale: "id-ID").format(trx.nettoRekon).replaceAll("Rp", "").replaceAll(",00", ",0"),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         )
                     ],
@@ -268,8 +272,8 @@ class VTanggal extends StatelessWidget {
 
   loadTransaksi() async {
     EasyLoading.showInfo("loading");
-    if(Val.perTanggal().hasData()) tanggalnya.value = Val.perTanggal().get();
-    final transaksi = await Conn().transaksi(tanggalnya.value);
+    if(Val.perTanggal().hasData()) Glb.tanggalnya.value = Val.perTanggal().get();
+    final transaksi = await Conn().transaksi(Glb.tanggalnya.value);
     listTransaksiJson.assignAll(transaksi.body);
 
     listTransaksi.assignAll(
@@ -285,7 +289,7 @@ class VTanggal extends StatelessWidget {
   }
 
   loadRitAndTodnase()async{
-    final rt = await Conn().ritAndTonase(tanggalnya.value);
+    final rt = await Conn().ritAndTonase(Glb.tanggalnya.value);
     ritAndTonase.assignAll(rt.body);
   }
 }

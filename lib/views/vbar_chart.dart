@@ -39,9 +39,10 @@ class VBarChart extends StatelessWidget {
   // final bool? animate;
   final lsChart = <Series<OrdinalSales, String>>[].obs;
   final animeteNya = true.obs;
+  final String tanggal;
 
   VBarChart({
-    Key? key,
+    Key? key,required this.tanggal,
   }) : super(key: key);
 
   /// Creates a [BarChart] with sample data and no transition.
@@ -128,7 +129,7 @@ class VBarChart extends StatelessWidget {
   // }
 
   Future onLoad()async{
-    final res = await Conn().chart();
+    final res = await Conn().chart(tanggal);
     final data = List.from(res.body).map((e) => OrdinalSales("${e['jam']} - ${e['jam'] +1}", e['net'])).toList();
     final ls = [
       Series<OrdinalSales, String>(

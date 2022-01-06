@@ -17,9 +17,10 @@ class Conn extends GetConnect{
 
    Future<Response> transaksi(String tanggal) => get(_url+"/transaksi/$tanggal");
 
-   Future<Response> chart() => get(_url+"/chart");
+   Future<Response> chart(String tanggal) => get(_url+"/chart/"+tanggal);
    Future<Response> ritAndTonase(String tanggal) => get(_url+"/ritAndTonase/"+tanggal);
 
    Future<Response> ritTonasePerBulan(String tanggal) => get(_url+"/ritTonasePerBulan/"+tanggal);
    Future<Response> transaksiPerBulan(String tanggal) => get(_url+"/transaksiPerBulan/"+tanggal);
+   Future<Response> jamTerakhir() => get(_url+"/jamTerakhir");
 }
